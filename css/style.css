@@ -1,0 +1,72 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+#countryData{
+    background-color: #f1f0f0;
+    padding-top: 15px;
+}
+.countryCard{
+    height: 375px;
+}
+.container-fluid h1{
+    color: orange;
+    font-weight: 600;
+}
+.countryDetails h3{
+    color: orange;
+}
+.countryDetails p{
+    color: grey;
+    font-size: 16px;
+}
+.countryCard img{
+    margin: 25px auto 0;
+    width: 225px;
+    border-radius: 10px;
+    display: block;
+}
+.countryCard img{
+    object-fit: cover;
+}
+.btn{
+    text-transform: uppercase;
+    font-size: 12px;
+    background-color: orange;
+    color: #000;
+    font-weight: bold;
+    width: 150px;
+    border-radius: 50px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+.countryName{
+    text-transform: uppercase;
+}
+.header{
+    background-color: #f1f0f0;
+}
+input{
+    margin-top: 20px;
+    padding: 10px 0;
+    padding-left: 20px;
+    width: 60%;
+    background-color: #f1f0f0;   
+    border-color: #f1f0f0;
+    border-radius: 50px;
+    border-width: 0;
+}
+.box{
+    width: 50px;;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 0;
+    color: orange;
+    cursor: pointer;
+}
+.box:hover{
+    background-color: orange;
+    color: #000;
+}
