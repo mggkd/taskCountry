@@ -10,6 +10,13 @@ const arrowForName = document.getElementById('arrowForName');
 const arrowForCap = document.getElementById('arrowForCap');
 const arrowForPop = document.getElementById('arrowForPop');
 
+const chartDiv = document.getElementById('chartDiv');
+const btnGraphSort = document.getElementById('btnGraphSort');
+const chartPop = document.getElementById('chartPop');
+const btnGraphSortPop = document.getElementById('btnGraphSortPop');
+const btnGraphSortLang = document.getElementById('btnGraphSortLang');
+const chartLang = document.getElementById('chartLang');
+
 let setorder = 'desc';
 let test = 'hard';
 let flag = 'true';
@@ -83,9 +90,9 @@ const onTypeSearch = (eve) => {
         let languages = country.languages.join(" ");
         return (
             country.name.toLowerCase().includes(eve.target.value.toLowerCase()) ||
-            country.capital.toLowerCase().includes(eve.target.value.toLowerCase())||
+            country.capital.toLowerCase().includes(eve.target.value.toLowerCase()) ||
             languages.toLowerCase().includes(eve.target.value.toLowerCase())
-            );
+        );
     });
     listOfCountries(newArray);
 };
@@ -113,6 +120,76 @@ function listOfCountries(arr) {
     countryData.innerHTML = result;
 }
 
+const onGraphSort = (eve => {
+    eve.preventDefault();
+    sortBtn()
+})
+
+function sortBtn() {
+    chartDiv.classList.remove('d-none')
+    chartPop.classList.remove('d-none')
+    chartLang.classList.add('d-none')
+    chartDiv.scrollIntoView();
+    let topTenPop = countries.sort((a, b) => b.population - a.population).slice(0, 10);
+    let newChart =  new Chart("chartPop", {
+            type: "horizontalBar",
+            data: {
+                labels: topTenPop.map(country => country.name),
+                datasets: [{
+                data: topTenPop.map(country => country.population),
+                backgroundColor: 'orange',
+                }]
+            },
+            options: {
+                legend: {display: false}
+            }
+    }); 
+}
+
+const onGraphSortPop = (eve)=>{
+    cl('click pop btn')
+    sortBtn()
+}
+const onGraphSortLang = (eve) => {
+    eve.preventDefault();
+  
+    // Show the language chart and hide the population chart
+    chartPop.classList.add('d-none');
+    chartLang.classList.remove('d-none');
+    chartDiv.scrollIntoView();
+  
+    let languageCount = {};
+
+    countries.forEach(country => {
+      country.languages.forEach(language => {
+        if (!languageCount[language]) {
+          languageCount[language] = 1;
+        }
+        else {
+          languageCount[language] += 1;
+        }
+      });
+    });
+    
+    let topTenLanguages = Object.entries(languageCount).sort((a, b) => b[1] - a[1])
+                                .slice(0, 10);
+
+    let newChart = new Chart("chartLang", {
+      type: "horizontalBar",
+      data: {
+        labels: topTenLanguages.map(language => language[0]),
+        datasets: [{
+          data: topTenLanguages.map(language => language[1]),
+          backgroundColor: 'orange',
+        }]
+      },
+      options: {
+        legend: { display: false }
+      }
+    });
+  };
+  
+
 function toggleArrowForName() {
     arrowForName.classList.toggle('fa-arrow-up-z-a')
     arrowForName.classList.toggle('fa-arrow-down-a-z')
@@ -130,3 +207,6 @@ btnSortName.addEventListener('click', onSortClick)
 btnSortCapital.addEventListener('click', onCapitalClick)
 btnSortPopulation.addEventListener('click', onPopulationClick)
 searchBox.addEventListener('input', onTypeSearch)
+btnGraphSort.addEventListener('click', onGraphSort)
+btnGraphSortLang.addEventListener('click', onGraphSortLang)
+btnGraphSortPop.addEventListener('click', onGraphSortPop)
